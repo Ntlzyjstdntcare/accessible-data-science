@@ -4,7 +4,7 @@
 		module="accessible-data-science$sbt_2.11"
 		revision="0.1"
 		status="integration"
-		publication="20160207183211"
+		publication="20160208223320"
 	/>
 	<configurations>
 		<conf name="default" visibility="public"/>

@@ -4,7 +4,7 @@
 		module="accessible-data-science$sources_javadoc_2.11"
 		revision="0.1"
 		status="integration"
-		publication="20160207183212"
+		publication="20160208223319"
 	/>
 	<configurations>
 		<conf name="compile" visibility="public" description=""/>

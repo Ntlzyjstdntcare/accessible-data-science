@@ -1110,9 +1110,9 @@
 [debug] 	[NOT REQUIRED] org.scala-sbt#test-interface;1.0!test-interface.jar
 [debug] 	[NOT REQUIRED] org.scala-sbt#apply-macro;0.13.9!apply-macro.jar
 [debug] 	[NOT REQUIRED] org.jboss.interceptor#jboss-interceptor-api;1.1!jboss-interceptor-api.jar
-[debug] :: resolution report :: resolve 1016ms :: artifacts dl 34ms
+[debug] :: resolution report :: resolve 563ms :: artifacts dl 15ms
 [debug] 	report for default#accessible-data-science$sbt_2.11;0.1 default produced in /home/colm/projects/accessible-data-science/target/resolution-cache/reports/default-accessible-data-science$sbt_2.11-default.xml
-[debug] 	resolve done (1016ms resolve - 34ms download)
+[debug] 	resolve done (563ms resolve - 15ms download)
 [debug] Using inline dependencies specified in Scala.
 [debug] :: resolving dependencies :: default#accessible-data-science$sources_2.11;0.1
 [debug] 	confs: [default]
@@ -1660,6 +1660,6 @@
 [debug] 	[NOT REQUIRED] org.eclipse.sisu#org.eclipse.sisu.inject;0.3.0!org.eclipse.sisu.inject.jar(src)
 [debug] 	[NOT REQUIRED] org.codehaus.plexus#plexus-component-annotations;1.5.5!plexus-component-annotations.jar(src)
 [debug] 	[NOT REQUIRED] org.codehaus.plexus#plexus-classworlds;2.5.2!plexus-classworlds.jar(src)
-[debug] :: resolution report :: resolve 140ms :: artifacts dl 14ms
+[debug] :: resolution report :: resolve 125ms :: artifacts dl 14ms
 [debug] 	report for default#accessible-data-science$sources_2.11;0.1 default produced in /home/colm/projects/accessible-data-science/target/resolution-cache/reports/default-accessible-data-science$sources_2.11-default.xml
-[debug] 	resolve done (140ms resolve - 14ms download)
+[debug] 	resolve done (125ms resolve - 14ms download)
