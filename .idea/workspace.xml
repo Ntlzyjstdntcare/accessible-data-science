@@ -42,8 +42,8 @@
       <file leaf-file-name="AccessibleDataScience.scala" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/AccessibleDataScience.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.13235295">
-              <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
+            <state vertical-scroll-proportion="0.15126051">
+              <caret line="8" column="2" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="2" />
               <folding />
             </state>
           </provider>
@@ -997,7 +997,7 @@
     </recent_temporary>
   </component>
   <component name="SbtLocalSettings">
-    <option name="lastUpdateTimestamp" value="1454869933529" />
+    <option name="lastUpdateTimestamp" value="1454970801264" />
     <option name="availableProjects">
       <map>
         <entry>
@@ -1044,12 +1044,12 @@
       <workItem from="1454773835031" duration="3339000" />
       <workItem from="1454867529947" duration="1242000" />
       <workItem from="1454868902540" duration="3383000" />
-      <workItem from="1454970792200" duration="3000" />
+      <workItem from="1454970792200" duration="163000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7967000" />
+    <option name="totallyTimeSpent" value="8127000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1855" height="1056" extended-state="6" />
@@ -1288,8 +1288,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/AccessibleDataScience.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13235295">
-          <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
+        <state vertical-scroll-proportion="0.15126051">
+          <caret line="8" column="2" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="2" />
           <folding />
         </state>
       </provider>
