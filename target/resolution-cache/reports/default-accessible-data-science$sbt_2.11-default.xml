@@ -7,7 +7,7 @@
 		revision="0.1"
 		conf="default"
 		confs="default"
-		date="20160207175223"/>
+		date="20160207183211"/>
 	<dependencies>
 		<module organisation="com.eed3si9n" name="sbt-assembly">
 			<revision name="0.14.1" status="release" pubdate="20151121152527" resolver="sbt-chain" artresolver="sbt-chain" extra-scalaVersion="2.10" extra-sbtVersion="0.13" downloaded="false" searched="false" default="false" conf="compile, default(compile)" position="53">
@@ -120,11 +120,11 @@
 			</revision>
 		</module>
 		<module organisation="org.jboss.interceptor" name="jboss-interceptor-api">
-			<revision name="1.1" status="release" pubdate="20100720042027" resolver="jcenter" artresolver="jcenter" homepage="" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="67">
-				<metadata-artifact status="successful" details="" size="3952" time="193" location="/home/colm/.ivy2/cache/org.jboss.interceptor/jboss-interceptor-api/ivy-1.1.xml" searched="true" original-local-location="/home/colm/.ivy2/cache/org.jboss.interceptor/jboss-interceptor-api/ivy-1.1.xml.original" origin-is-local="false" origin-location="https://jcenter.bintray.com/org/jboss/interceptor/jboss-interceptor-api/1.1/jboss-interceptor-api-1.1.pom"/>
+			<revision name="1.1" status="release" pubdate="20100720042027" resolver="sbt-chain" artresolver="sbt-chain" homepage="" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="67">
+				<metadata-artifact status="no" details="" size="2609" time="0" location="/home/colm/.ivy2/cache/org.jboss.interceptor/jboss-interceptor-api/ivy-1.1.xml" searched="false" origin-is-local="false" origin-location="https://jcenter.bintray.com/org/jboss/interceptor/jboss-interceptor-api/1.1/jboss-interceptor-api-1.1.pom"/>
 				<caller organisation="javax.enterprise" name="cdi-api" conf="default, compile, runtime, master" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="1.0"/>
 				<artifacts>
-					<artifact name="jboss-interceptor-api" type="jar" ext="jar" status="successful" details="" size="5986" time="157" location="/home/colm/.ivy2/cache/org.jboss.interceptor/jboss-interceptor-api/jars/jboss-interceptor-api-1.1.jar">
+					<artifact name="jboss-interceptor-api" type="jar" ext="jar" status="no" details="" size="5986" time="0" location="/home/colm/.ivy2/cache/org.jboss.interceptor/jboss-interceptor-api/jars/jboss-interceptor-api-1.1.jar">
 						<origin-location is-local="false" location="https://jcenter.bintray.com/org/jboss/interceptor/jboss-interceptor-api/1.1/jboss-interceptor-api-1.1.jar"/>
 					</artifact>
 				</artifacts>

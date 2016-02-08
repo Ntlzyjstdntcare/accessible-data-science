@@ -4,7 +4,7 @@
 		module="accessible-data-science$sources_2.11"
 		revision="0.1"
 		status="integration"
-		publication="20160207175231"
+		publication="20160207183212"
 	/>
 	<configurations>
 		<conf name="default" visibility="public" description=""/>
