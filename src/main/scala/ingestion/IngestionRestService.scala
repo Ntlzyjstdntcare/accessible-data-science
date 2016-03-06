@@ -26,7 +26,7 @@ class IngestionRestServiceActor extends Actor with ActorLogging with HttpService
   def actorRefFactory = context
   implicit def executionContext = actorRefFactory.dispatcher
 
-  implicit val timeout = Timeout(5 seconds)
+  implicit val timeout = Timeout(20 seconds)
 
 //  val corsAllowedHostRules = List[String => Boolean](
 //    hostname => true,

@@ -3,6 +3,7 @@ package ingestion.routing
 import akka.actor.SupervisorStrategy.Stop
 import akka.actor._
 import ingestion.IngestionRestService.{APIMessage, _}
+import ingestion.domain.APIJsonProtocol
 import ingestion.routing.PerRequest.{WithActorRef, WithProps}
 import spray.http.StatusCode
 import spray.http.StatusCodes._
@@ -14,10 +15,11 @@ import scala.concurrent.duration._
 /**
   * Created by colm on 05/03/16.
   */
-trait PerRequest extends Actor with SprayJsonSupport with ActorLogging {
+trait PerRequest extends Actor with SprayJsonSupport with APIJsonProtocol with ActorLogging {
 
   import context._
   import ingestion.IngestionRestService.APIMessage
+  import APIResultsJsonProtocol._
 
   def r: RequestContext
   def target: ActorRef

@@ -1,4 +1,9 @@
-name := "Accessible Data Science"
+assemblyMergeStrategy in assembly <<= (assemblyMergeStrategy in assembly) { (old) => {
+  case PathList(ps@_*) if ps.last contains ".class" => MergeStrategy.first
+  case x => old(x)
+}}
+
+name := "ingestion"
 
 version := "0.1"
 
