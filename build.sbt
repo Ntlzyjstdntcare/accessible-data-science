@@ -28,6 +28,7 @@ libraryDependencies ++= {
     "org.apache.spark"            %% "spark-core"       % sparkVersion % "compile",
     "org.apache.spark"            %% "spark-sql"        % sparkVersion % "compile",
     "org.apache.spark"            %% "spark-streaming"  % sparkVersion % "compile",
-    "org.json4s"                  %% "json4s-native"    % "3.2.11"
+    "org.json4s"                  %% "json4s-native"    % "3.2.11",
+    "net.debasishg"               %% "redisclient"      % "3.0"
   )
 }

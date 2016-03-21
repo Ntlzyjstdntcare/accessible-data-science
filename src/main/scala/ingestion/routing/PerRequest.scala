@@ -20,6 +20,7 @@ trait PerRequest extends Actor with SprayJsonSupport with APIJsonProtocol with A
   import context._
   import ingestion.IngestionRestService.APIMessage
   import APIResultsJsonProtocol._
+  import FirstEDAResultsJsonProtocol._
 
   def r: RequestContext
   def target: ActorRef
@@ -30,6 +31,7 @@ trait PerRequest extends Actor with SprayJsonSupport with APIJsonProtocol with A
 
   def receive = {
     case ar: APIResults => complete(OK, ar)
+    case fer: NumberTopLevelElementsResults => complete(OK, fer)
     case ReceiveTimeout => complete(GatewayTimeout, "Request timeout")
   }
 
@@ -47,6 +49,12 @@ trait PerRequest extends Actor with SprayJsonSupport with APIJsonProtocol with A
 
   def complete(status: StatusCode, obj: APIResults) = {
     log.info("PerRequest - received APIResults")
+    r.complete(status, obj)
+    stop(self)
+  }
+
+  def complete(status: StatusCode, obj: NumberTopLevelElementsResults) = {
+    log.info("PerRequest - received NumberTopLevelElementsResults")
     r.complete(status, obj)
     stop(self)
   }
