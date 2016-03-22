@@ -58,9 +58,15 @@ class IngestionRestServiceActor extends Actor with ActorLogging with HttpService
         path("datagovuk") {
           routeMessage(APIActorDelegate, APIResultsRequest())
         } ~
-          path("firsteda") {
+          path("numbertoplevelelements") {
             routeMessage(FirstEDAActorDelegate, NumberTopLevelElementsRequest())
           }
+      } ~ {
+        post {
+          path("savetocassandra") {
+            complete("Saved to Cassandra!")
+          }
+        }
       }
     }
   }
