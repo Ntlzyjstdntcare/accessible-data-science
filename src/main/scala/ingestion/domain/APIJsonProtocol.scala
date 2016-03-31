@@ -13,9 +13,12 @@ trait APIJsonProtocol extends DefaultJsonProtocol {
     implicit val apiResultsFormat = jsonFormat1(APIResults)
   }
 
-  object FirstEDAResultsJsonProtocol extends DefaultJsonProtocol {
-    implicit val firstEDAResultsFormat = jsonFormat1(NumberTopLevelElementsResults)
+  object NumberTopLevelElementsResultsJsonProtocol extends DefaultJsonProtocol {
+    implicit val numberTopLevelElementsResultsFormat = jsonFormat1(NumberTopLevelElementsResults)
   }
 
+  object SaveToCassandraResponseJsonProtocol extends DefaultJsonProtocol {
+    implicit val saveToCassandraResponseFormat = jsonFormat1(SaveToCassandraResponse)
+  }
 
 }

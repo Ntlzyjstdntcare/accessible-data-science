@@ -36,7 +36,7 @@ class RedisClientActor extends Actor with ActorLogging {
 //      saveToRedis(fer.edaResults, "edaResults")
   }
 
-  def saveToRedis(resultType: String, results: String): Try[Boolean] = Try {
+  private def saveToRedis(resultType: String, results: String): Try[Boolean] = Try {
 
 //    val client = new RedisClient("localhost", 6379)
 
@@ -44,7 +44,7 @@ class RedisClientActor extends Actor with ActorLogging {
 
   }
 
-  def readFromRedis(resultsType: String): Try[Option[String]] = Try {
+  protected def readFromRedis(resultsType: String): Try[Option[String]] = Try {
 
 //    val client = new RedisClient("localhost", 6379)
 

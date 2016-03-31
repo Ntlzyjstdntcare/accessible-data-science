@@ -2,7 +2,7 @@ package ingestion
 
 import akka.actor.{ActorRef, Props, ActorLogging, Actor}
 import akka.util.Timeout
-import ingestion.backend.{NumberTopLevelElementsActor, APIActor}
+import ingestion.backend.{CassandraClientActor, NumberTopLevelElementsActor, APIActor}
 import ingestion.routing.PerRequestCreator
 import spray.http.HttpHeaders.{`Access-Control-Allow-Headers`, `Access-Control-Allow-Origin`}
 import spray.http.{SomeOrigins, HttpOrigin, HttpHeaders}
@@ -14,8 +14,10 @@ import scala.concurrent.duration._
 object IngestionRestService {
   def props(): Props = Props(classOf[IngestionRestServiceActor])
 
-  sealed trait APIMessage
-  sealed trait RedisMessage
+  sealed trait IngestionMessage
+
+  sealed trait APIMessage extends IngestionMessage
+  sealed trait DatabaseMessage extends IngestionMessage
 
   case class APIResultsRequest() extends APIMessage
   case class APIResults(results: String) extends APIMessage
@@ -23,8 +25,12 @@ object IngestionRestService {
   case class NumberTopLevelElementsRequest() extends APIMessage
   case class NumberTopLevelElementsResults(results: String) extends APIMessage
 
-  case class RedisResultsRequest(sender: ActorRef) extends RedisMessage
-  case class RedisResults(redisResults: String, sender: ActorRef) extends RedisMessage
+  case class RedisResultsRequest(sender: ActorRef) extends DatabaseMessage
+  case class RedisResults(results: String, sender: ActorRef) extends DatabaseMessage
+
+  case class SaveToCassandraRequest() extends DatabaseMessage
+  case class SaveToCassandraResponse(response: String) extends DatabaseMessage
+
 }
 
 
@@ -46,8 +52,12 @@ class IngestionRestServiceActor extends Actor with ActorLogging with HttpService
     APIActor.props()
   }
 
-  val FirstEDAActorDelegate: Props = {
+  val NumberTopLevelElementsActorDelegate: Props = {
     NumberTopLevelElementsActor.props()
+  }
+
+  val CassandraClientActorDelegate: Props = {
+    CassandraClientActor.props()
   }
 
   def receive = runRoute( myRoute )
@@ -59,12 +69,12 @@ class IngestionRestServiceActor extends Actor with ActorLogging with HttpService
           routeMessage(APIActorDelegate, APIResultsRequest())
         } ~
           path("numbertoplevelelements") {
-            routeMessage(FirstEDAActorDelegate, NumberTopLevelElementsRequest())
+            routeMessage(NumberTopLevelElementsActorDelegate, NumberTopLevelElementsRequest())
           }
       } ~ {
         post {
           path("savetocassandra") {
-            complete("Saved to Cassandra!")
+            routeMessage(CassandraClientActorDelegate, SaveToCassandraRequest())
           }
         }
       }
@@ -99,7 +109,7 @@ class IngestionRestServiceActor extends Actor with ActorLogging with HttpService
     }
   }
 
-  def routeMessage(delegate: Props, message: APIMessage): Route = {
+  def routeMessage(delegate: Props, message: IngestionMessage): Route = {
     ctx => perRequest(ctx, delegate, message)
   }
 

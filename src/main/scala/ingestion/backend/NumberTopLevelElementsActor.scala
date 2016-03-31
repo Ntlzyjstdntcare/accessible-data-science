@@ -30,16 +30,16 @@ class NumberTopLevelElementsActor extends Actor with ActorLogging {
 
   def receive = {
     case fer: NumberTopLevelElementsRequest =>
-      log.info("FirstEDAActor - received NumberTopLevelElementsRequest")
+      log.info("NumberTopLevelElementsActor - received NumberTopLevelElementsRequest")
       val mySender = sender
       context.actorOf(RedisClientActor.props, "myRedisActor") ! RedisResultsRequest(mySender)
 
     case rr: RedisResults =>
-      log.info("FirstEDAActor - received RedisResults")
-      rr.sender ! NumberTopLevelElementsResults(getNumberOfTopLevelElements(rr.redisResults))
+      log.info("NumberTopLevelElementsActor - received RedisResults")
+      rr.sender ! NumberTopLevelElementsResults(getNumberOfTopLevelElements(rr.results))
   }
 
-  def getNumberOfTopLevelElements(json: String): Int = {
+  private def getNumberOfTopLevelElements(json: String): Int = {
     //Turn the String into Json and get the number of top-level(?) elements in it. Look for scala json libraries/utils. See what I use in SparkJobSever.
     val jsonAST = parse(json)
 
