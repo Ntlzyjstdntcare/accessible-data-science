@@ -21,4 +21,8 @@ trait APIJsonProtocol extends DefaultJsonProtocol {
     implicit val saveToCassandraResponseFormat = jsonFormat1(SaveToCassandraResponse)
   }
 
+  object ReplaceNullValuesResponseProtocol extends DefaultJsonProtocol {
+    implicit val replaceNullValuesResponseFormat = jsonFormat1(ReplaceNullValuesResponse)
+  }
+
 }

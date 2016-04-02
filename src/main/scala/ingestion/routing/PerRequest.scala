@@ -2,7 +2,7 @@ package ingestion.routing
 
 import akka.actor.SupervisorStrategy.Stop
 import akka.actor._
-import ingestion.IngestionRestService.{APIMessage, _}
+import ingestion.IngestionRestService._
 import ingestion.domain.APIJsonProtocol
 import ingestion.routing.PerRequest.{WithActorRef, WithProps}
 import spray.http.StatusCode
@@ -17,11 +17,12 @@ import scala.concurrent.duration._
   */
 trait PerRequest extends Actor with SprayJsonSupport with APIJsonProtocol with ActorLogging {
 
-  import context._
-  import ingestion.IngestionRestService.IngestionMessage
   import APIResultsJsonProtocol._
   import NumberTopLevelElementsResultsJsonProtocol._
+  import ReplaceNullValuesResponseProtocol._
   import SaveToCassandraResponseJsonProtocol._
+  import context._
+  import ingestion.IngestionRestService.IngestionMessage
 
   def r: RequestContext
   def target: ActorRef
@@ -34,6 +35,7 @@ trait PerRequest extends Actor with SprayJsonSupport with APIJsonProtocol with A
     case ar: APIResults => complete(OK, ar)
     case fer: NumberTopLevelElementsResults => complete(OK, fer)
     case stcr: SaveToCassandraResponse => complete(OK, stcr)
+    case rnvr: ReplaceNullValuesResponse => complete(OK, rnvr)
     case ReceiveTimeout => complete(GatewayTimeout, "Request timeout")
   }
 
@@ -63,6 +65,12 @@ trait PerRequest extends Actor with SprayJsonSupport with APIJsonProtocol with A
 
   def complete(status: StatusCode, obj: SaveToCassandraResponse) = {
     log.info("PerRequest - received SaveToCassandraResponse")
+    r.complete(status, obj)
+    stop(self)
+  }
+
+  def complete(status: StatusCode, obj: ReplaceNullValuesResponse) = {
+    log.info("PerRequest - received ReplaceNullValuesResponse")
     r.complete(status, obj)
     stop(self)
   }

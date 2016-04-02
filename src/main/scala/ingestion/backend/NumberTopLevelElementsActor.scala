@@ -3,10 +3,10 @@ package ingestion.backend
 import akka.actor._
 import akka.util.Timeout
 import ingestion.IngestionRestService._
-import org.json4s
-import scala.concurrent.duration._
 import org.json4s._
 import org.json4s.native.JsonMethods._
+
+import scala.concurrent.duration._
 
 /**
   * Created by colm on 20/03/16.
@@ -20,13 +20,10 @@ object NumberTopLevelElementsActor {
 class NumberTopLevelElementsActor extends Actor with ActorLogging {
 
   implicit lazy val system = ActorSystem()
-  implicit lazy val timeout = Timeout(15.seconds)
+  implicit lazy val timeout = Timeout(15 seconds)
 
   implicit def intToString(i: Int) = i.toString
 
-  import system.dispatcher
-
-//  val mySender = sender
 
   def receive = {
     case fer: NumberTopLevelElementsRequest =>

@@ -2,7 +2,7 @@ package ingestion
 
 import akka.actor.{ActorRef, Props, ActorLogging, Actor}
 import akka.util.Timeout
-import ingestion.backend.{CassandraClientActor, NumberTopLevelElementsActor, APIActor}
+import ingestion.backend.{ReplaceNullValuesActor, CassandraClientActor, NumberTopLevelElementsActor, APIActor}
 import ingestion.routing.PerRequestCreator
 import spray.http.HttpHeaders.{`Access-Control-Allow-Headers`, `Access-Control-Allow-Origin`}
 import spray.http.{SomeOrigins, HttpOrigin, HttpHeaders}
@@ -17,13 +17,15 @@ object IngestionRestService {
   sealed trait IngestionMessage
 
   sealed trait APIMessage extends IngestionMessage
+  sealed trait EDAMessage extends IngestionMessage
   sealed trait DatabaseMessage extends IngestionMessage
+  sealed trait CleaningMessage extends IngestionMessage
 
   case class APIResultsRequest() extends APIMessage
   case class APIResults(results: String) extends APIMessage
 
-  case class NumberTopLevelElementsRequest() extends APIMessage
-  case class NumberTopLevelElementsResults(results: String) extends APIMessage
+  case class NumberTopLevelElementsRequest() extends EDAMessage
+  case class NumberTopLevelElementsResults(results: String) extends EDAMessage
 
   case class RedisResultsRequest(sender: ActorRef) extends DatabaseMessage
   case class RedisResults(results: String, sender: ActorRef) extends DatabaseMessage
@@ -31,6 +33,8 @@ object IngestionRestService {
   case class SaveToCassandraRequest() extends DatabaseMessage
   case class SaveToCassandraResponse(response: String) extends DatabaseMessage
 
+  case class ReplaceNullValuesRequest(replacementValue: String) extends CleaningMessage
+  case class ReplaceNullValuesResponse(responseLength: Int) extends CleaningMessage
 }
 
 
@@ -60,6 +64,10 @@ class IngestionRestServiceActor extends Actor with ActorLogging with HttpService
     CassandraClientActor.props()
   }
 
+  val ReplaceNullValuesDelegate: Props = {
+    ReplaceNullValuesActor.props()
+  }
+
   def receive = runRoute( myRoute )
 
   def myRoute = {
@@ -75,6 +83,12 @@ class IngestionRestServiceActor extends Actor with ActorLogging with HttpService
         post {
           path("savetocassandra") {
             routeMessage(CassandraClientActorDelegate, SaveToCassandraRequest())
+          } ~
+            path("replacenullvalues") {
+              parameters('replacementValue.as[String]) { (replacementValue) => {
+                routeMessage(ReplaceNullValuesDelegate, ReplaceNullValuesRequest(replacementValue))
+              }
+            }
           }
         }
       }

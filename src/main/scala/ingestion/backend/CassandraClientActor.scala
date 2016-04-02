@@ -20,7 +20,7 @@ object CassandraClientActor {
 class CassandraClientActor extends Actor with ActorLogging {
 
   implicit lazy val system = ActorSystem()
-  implicit lazy val timeout = Timeout(15.seconds)
+  implicit lazy val timeout = Timeout(15 seconds)
 
   import system.dispatcher
 
