@@ -34,7 +34,7 @@ object IngestionRestService {
   case class SaveToCassandraResponse(response: String) extends DatabaseMessage
 
   case class ReplaceNullValuesRequest(replacementValue: String) extends CleaningMessage
-  case class ReplaceNullValuesResponse(responseLength: Int) extends CleaningMessage
+  case class ReplaceNullValuesResponse(response: String) extends CleaningMessage
 }
 
 

@@ -34,17 +34,30 @@ class ReplaceNullValuesActor extends Actor with ActorLogging {
 
     case rr: RedisResults =>
       log.info("ReplaceNullValuesActor - received RedisResults")
-      rr.sender ! ReplaceNullValuesResponse(replaceNullValues(rr.results, replacementValue).length)
+      rr.sender ! ReplaceNullValuesResponse(replaceNullValues(rr.results, replacementValue))
   }
 
-  private def replaceNullValues(results: String, replacementValue: String): List[String] = {
-    val resultsAST = parse(results)
-    for {
-      JObject(child) <- resultsAST
-      JField(x, JValue) <- child
-//      if y == "Avon"
-    } yield x
+  private def replaceNullValues(results: String, replacementValue: String): String = {
 
+    log.info(results)
+    //To-Do search and replace through the AST, rather than through the raw string
+    val resultsWithNullsReplaced = results.replace("\"\"", "\"" + replacementValue + "\"")
+
+    val resultsAST = parse(resultsWithNullsReplaced)
+//    for {
+//      JObject(child) <- resultsAST
+//      JField(x, JValue) <- child
+//      if y == "Avon"
+//    } yield x
+
+
+
+//    resultsAST transform {
+//      case JString(y) => JString("test")
+//    }
+
+//    "{\"results\": \"" + compact(render(resultsAST)).replace("\"", "\\\"") + "\"}"
+    compact(render(resultsAST))//.replace("\"", "\\\"")
   }
 
 }
