@@ -40,7 +40,10 @@ class ReplaceNullValuesActor extends Actor with ActorLogging {
   private def replaceNullValues(results: String, replacementValue: String): String = {
 
     log.info(results)
-    //To-Do search and replace through the AST, rather than through the raw string
+    //To-Do search and replace through the AST, rather than through the raw string.
+    //How to deal with the fact that the AST could have essentially an infinite depth?
+    //Need a recursive function? Surely the json4s library offers support for this?
+    //Or is doing it through the raw string better? What is the point of the AST?
     val resultsWithNullsReplaced = results.replace("\"\"", "\"" + replacementValue + "\"")
 
     val resultsAST = parse(resultsWithNullsReplaced)
