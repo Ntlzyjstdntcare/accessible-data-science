@@ -2,7 +2,7 @@ package ingestion
 
 import akka.actor.{ActorRef, Props, ActorLogging, Actor}
 import akka.util.Timeout
-import ingestion.backend.{ReplaceNullValuesActor, CassandraClientActor, NumberTopLevelElementsActor, APIActor}
+import ingestion.backend._
 import ingestion.routing.PerRequestCreator
 import spray.http.HttpHeaders.{`Access-Control-Allow-Headers`, `Access-Control-Allow-Origin`}
 import spray.http.{SomeOrigins, HttpOrigin, HttpHeaders}
@@ -20,6 +20,7 @@ object IngestionRestService {
   sealed trait EDAMessage extends IngestionMessage
   sealed trait DatabaseMessage extends IngestionMessage
   sealed trait CleaningMessage extends IngestionMessage
+  sealed trait ExplorationMessage extends IngestionMessage
 
   case class APIResultsRequest() extends APIMessage
   case class APIResults(results: String) extends APIMessage
@@ -35,6 +36,9 @@ object IngestionRestService {
 
   case class ReplaceNullValuesRequest(replacementValue: String) extends CleaningMessage
   case class ReplaceNullValuesResponse(response: String) extends CleaningMessage
+
+  case class GroupByKeyRequest(keyToGroupBy: String) extends ExplorationMessage
+  case class GroupByKeyResponse(GroupedValues: String) extends ExplorationMessage
 }
 
 
@@ -68,6 +72,10 @@ class IngestionRestServiceActor extends Actor with ActorLogging with HttpService
     ReplaceNullValuesActor.props()
   }
 
+  val GroupByKeyDelegate: Props = {
+    GroupByKeyActor.props()
+  }
+
   def receive = runRoute( myRoute )
 
   def myRoute = {
@@ -85,11 +93,18 @@ class IngestionRestServiceActor extends Actor with ActorLogging with HttpService
             routeMessage(CassandraClientActorDelegate, SaveToCassandraRequest())
           } ~
             path("replacenullvalues") {
+              println("hit replacenullvalues endpoint")
               parameters('replacementValue.as[String]) { (replacementValue) => {
                 routeMessage(ReplaceNullValuesDelegate, ReplaceNullValuesRequest(replacementValue))
               }
             }
-          }
+          } ~
+            path("groupbykey") {
+              println("hit groupbykey endpoint")
+              parameters('keyToGroupBy.as[String]) { (keyToGroupBy) => {
+                routeMessage(GroupByKeyDelegate, GroupByKeyRequest(keyToGroupBy))
+              }}
+            }
         }
       }
     }

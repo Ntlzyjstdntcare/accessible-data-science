@@ -21,6 +21,7 @@ trait PerRequest extends Actor with SprayJsonSupport with APIJsonProtocol with A
   import NumberTopLevelElementsResultsJsonProtocol._
   import ReplaceNullValuesResponseProtocol._
   import SaveToCassandraResponseJsonProtocol._
+  import GroupByKeyResponseProtocol._
   import context._
   import ingestion.IngestionRestService.IngestionMessage
 
@@ -36,6 +37,7 @@ trait PerRequest extends Actor with SprayJsonSupport with APIJsonProtocol with A
     case fer: NumberTopLevelElementsResults => complete(OK, fer)
     case stcr: SaveToCassandraResponse => complete(OK, stcr)
     case rnvr: ReplaceNullValuesResponse => complete(OK, rnvr)
+    case gbkr: GroupByKeyResponse => complete(OK, gbkr)
     case ReceiveTimeout => complete(GatewayTimeout, "Request timeout")
   }
 
@@ -71,6 +73,12 @@ trait PerRequest extends Actor with SprayJsonSupport with APIJsonProtocol with A
 
   def complete(status: StatusCode, obj: ReplaceNullValuesResponse) = {
     log.info("PerRequest - received ReplaceNullValuesResponse")
+    r.complete(status, obj)
+    stop(self)
+  }
+
+  def complete(status: StatusCode, obj: GroupByKeyResponse): Unit = {
+    log.info("PerRequest - received GroupByKeyResponse")
     r.complete(status, obj)
     stop(self)
   }

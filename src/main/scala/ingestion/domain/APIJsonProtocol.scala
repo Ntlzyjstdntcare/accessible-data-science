@@ -25,4 +25,8 @@ trait APIJsonProtocol extends DefaultJsonProtocol {
     implicit val replaceNullValuesResponseFormat = jsonFormat1(ReplaceNullValuesResponse)
   }
 
+  object GroupByKeyResponseProtocol extends DefaultJsonProtocol {
+    implicit val groupByKeyResponseFormat = jsonFormat1(GroupByKeyResponse)
+  }
+
 }
