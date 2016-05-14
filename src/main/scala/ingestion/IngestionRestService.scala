@@ -38,7 +38,7 @@ object IngestionRestService {
   case class ReplaceNullValuesResponse(response: String) extends CleaningMessage
 
   case class GroupByKeyRequest(keyToGroupBy: String) extends ExplorationMessage
-  case class GroupByKeyResponse(GroupedValues: String) extends ExplorationMessage
+  case class GroupByKeyResponse(GroupedValues: List[String]) extends ExplorationMessage
 }
 
 
