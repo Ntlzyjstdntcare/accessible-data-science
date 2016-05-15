@@ -24,10 +24,9 @@ object GroupByKeyActor {
 //JFields attached, we want to return those JFields as key-value pairs. If the key just has a
 //list of values, we return those values as a list of Strings.
 //
-//To-Do: Find out how to do the work in groupByKey in a more elegant fashion, without
-//using a for comprehension that yields a list. So we want to use recursion, but we need
-//to know the type of the JValue, i.e for each JField. I haven't been able to do
-//that thus far.
+//To-Do: See Chapter 15 - Case Classes and Pattern Matching in Programming in Scala,
+//I want to find out how to use case classes and pattern matching with Json when I don't
+//already know the structure of the Json. Google it.
 
 
 class GroupByKeyActor extends Actor with ActorLogging {
@@ -98,20 +97,31 @@ class GroupByKeyActor extends Actor with ActorLogging {
 
 //       dataset.children.flatMap(x => x.)
 //      val x: List[String] = for {
-       for {
-         JObject(child) <- dataset
-//        dummy = println("child of JObject is: " + child.toString())
-         JField(string, value) <- child
 
+       for (JObject(child) <- dataset) {
+         for (JField(string, value) <- child) {
+           iterateThroughAST(value)
+           if (string.equals(key)) {
+             println("String equals key yayy")
+             addValueToResultsList(value)
+           }
+         }
+       }
 
-        //dummy2 = println("string in JField is: " + string)
-         dummy = iterateThroughAST(value/*, valuesList*/)
-//         JString(string) <- value
-         if (string.equals(key)) //{ value.toString :: valuesList}
-         dummy2 = println("String equals key yayyy")
-         dummy3 = addValueToResultsList(value)
-//         dummy3 = addValueToResultsList(string)
-       } yield value.toString
+//       for {
+//         JObject(child) <- dataset
+//         //        dummy = println("child of JObject is: " + child.toString())
+//         JField(string, value) <- child
+//
+//
+//         //dummy2 = println("string in JField is: " + string)
+//         dummy = iterateThroughAST(value /*, valuesList*/)
+//         //         JString(string) <- value
+//         if (string.equals(key)) //{ value.toString :: valuesList}
+//         dummy2 = println("String equals key yayyy")
+//         dummy3 = addValueToResultsList(value)
+//       //         dummy3 = addValueToResultsList(string)
+//       } yield value.toString
 
 //      if (x.isEmpty) iterateThroughAST()
 //      x
