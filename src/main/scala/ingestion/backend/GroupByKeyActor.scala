@@ -57,13 +57,12 @@ class GroupByKeyActor extends Actor with ActorLogging {
 
 
     def iterateThroughAST(dataset: JValue/*, valuesList: List[String]*/): Unit = {
-       println("In iterateThroughAST")
+      println("In iterateThroughAST")
 
-      for (JObject(child) <- dataset) {
-        for (JField(string, value) <- child) {
-          findKey(string, value)
-        }
-      }
+      for {
+        JObject(child) <- dataset
+        JField(string, value) <- child
+      } findKey(string, value)
     }
 
     def findKey(string: String, value: JsonAST.JValue): Unit = {
