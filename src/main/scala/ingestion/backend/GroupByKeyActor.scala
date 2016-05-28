@@ -80,7 +80,7 @@ class GroupByKeyActor extends Actor with ActorLogging {
       //Do I want to get the .values of the original dataset and work with that Map rather than using the for comprehension
       //over the JValues? Probably not. Ultimately I want to get the value associated with the particular key in the JField.
       //If I'm just returning a list of strings then I have the solution already. But what if the value in the JField contains
-      //nested key-value pairs. I have to handle this, possibly recursively.
+      //nested key-value pairs. I have to handle this, possibly recursively. Probably using pattern-matching, and case classes.
       valuesList += value.values.toString
     }
     iterateThroughAST(dataset)

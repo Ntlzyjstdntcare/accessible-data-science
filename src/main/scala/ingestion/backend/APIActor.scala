@@ -5,7 +5,7 @@ package ingestion.backend
 import akka.actor._
 import akka.io.IO
 import akka.util.Timeout
-import ingestion.IngestionRestService.{APIResults, APIResultsRequest}
+import ingestion.IngestionRestService.{APIJsonResultsRequest, APIResults, APIResultsRequest}
 //import org.apache.commons.httpclient._
 //import org.apache.commons.httpclient.methods.GetMethod
 
@@ -66,6 +66,9 @@ class APIActor extends Actor with ActorLogging {
       val mySender = sender
       log.info("APIActor - received APIResultsRequest")
       response map((mySender, _)) pipeTo self
+
+//    case apjrr: APIJsonResultsRequest =>
+
 
     case (sender: ActorRef, myResponse: HttpResponse) =>
       sender ! APIResults(myResponse.entity.asString)

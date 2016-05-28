@@ -25,6 +25,9 @@ object IngestionRestService {
   case class APIResultsRequest() extends APIMessage
   case class APIResults(results: String) extends APIMessage
 
+  case class APIJsonResultsRequest() extends APIMessage
+  case class APIJsonResults(results: String) extends APIMessage
+
   case class NumberTopLevelElementsRequest() extends EDAMessage
   case class NumberTopLevelElementsResults(results: String) extends EDAMessage
 
@@ -86,7 +89,10 @@ class IngestionRestServiceActor extends Actor with ActorLogging with HttpService
         } ~
           path("numbertoplevelelements") {
             routeMessage(NumberTopLevelElementsActorDelegate, NumberTopLevelElementsRequest())
-          }
+          } ~
+            path("datagovukasjson") {
+              routeMessage(APIActorDelegate, APIJsonResultsRequest())
+            }
       } ~ {
         post {
           path("savetocassandra") {
