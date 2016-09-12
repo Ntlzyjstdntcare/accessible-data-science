@@ -49,12 +49,8 @@ class GroupByKeyActor extends Actor with ActorLogging {
   }
 
   private def groupByKey(key: String, dataset: json4s.JValue): List[String] = {
-    //parse dataset into AST
-    //for each JField, if the String is our key, add the JValue to our map value collection
-    //Then pass the JValue into this method recursively, looking for JFields within it
 
     var valuesList = new ListBuffer[String]()
-
 
     def iterateThroughAST(dataset: JValue/*, valuesList: List[String]*/): Unit = {
       println("In iterateThroughAST")

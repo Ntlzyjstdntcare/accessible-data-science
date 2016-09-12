@@ -1,11 +1,9 @@
 package ingestion.backend
 
-import java.util.UUID
-
-import akka.actor.{ActorSystem, Actor, ActorLogging, Props}
+import akka.actor.{Actor, ActorLogging, ActorSystem, Props}
 import akka.util.Timeout
-import ingestion.IngestionRestService.{RedisResults, RedisResultsRequest, SaveToCassandraResponse, SaveToCassandraRequest}
 import com.datastax.driver.core._
+import ingestion.IngestionRestService.{RedisResults, RedisResultsRequest, SaveToCassandraRequest, SaveToCassandraResponse}
 
 import scala.concurrent.duration._
 
@@ -21,8 +19,6 @@ class CassandraClientActor extends Actor with ActorLogging {
 
   implicit lazy val system = ActorSystem()
   implicit lazy val timeout = Timeout(15 seconds)
-
-  import system.dispatcher
 
   def receive = {
     case stcr: SaveToCassandraRequest =>

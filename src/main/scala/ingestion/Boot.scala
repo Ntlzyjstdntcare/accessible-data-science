@@ -25,7 +25,6 @@ object Boot extends App with LazyLogging {
   val environment = system.settings.config.getString("config.resource")
 
   logger.info("Environment    : " + environment)
-//  logger.info("Actor timeout  : " + config.getLong("actor.askTimeout"))
 
   val service = system.actorOf(IngestionRestService.props(), "ingestion-service")
 

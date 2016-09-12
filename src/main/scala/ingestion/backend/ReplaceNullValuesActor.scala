@@ -3,7 +3,6 @@ package ingestion.backend
 import akka.actor.{Actor, ActorLogging, ActorSystem, Props}
 import akka.util.Timeout
 import ingestion.IngestionRestService.{RedisResults, RedisResultsRequest, ReplaceNullValuesRequest, ReplaceNullValuesResponse}
-import org.json4s.JsonAST.JValue
 import org.json4s._
 import org.json4s.native.JsonMethods._
 
@@ -47,20 +46,8 @@ class ReplaceNullValuesActor extends Actor with ActorLogging {
     val resultsWithNullsReplaced = results.replace("\"\"", "\"" + replacementValue + "\"")
 
     val resultsAST = parse(resultsWithNullsReplaced)
-//    for {
-//      JObject(child) <- resultsAST
-//      JField(x, JValue) <- child
-//      if y == "Avon"
-//    } yield x
 
-
-
-//    resultsAST transform {
-//      case JString(y) => JString("test")
-//    }
-
-//    "{\"results\": \"" + compact(render(resultsAST)).replace("\"", "\\\"") + "\"}"
-    compact(render(resultsAST))//.replace("\"", "\\\"")
+    compact(render(resultsAST))
   }
 
 }

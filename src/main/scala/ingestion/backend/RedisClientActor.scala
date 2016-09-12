@@ -1,11 +1,11 @@
 package ingestion.backend
 
-import akka.actor.{ActorSystem, ActorLogging, Actor, Props}
+import akka.actor.{Actor, ActorLogging, ActorSystem, Props}
 import akka.util.Timeout
-import ingestion.IngestionRestService.{RedisResults, RedisResultsRequest, NumberTopLevelElementsResults, APIResults}
-import scala.concurrent.duration._
 import com.redis._
+import ingestion.IngestionRestService.{APIResults, RedisResults, RedisResultsRequest}
 
+import scala.concurrent.duration._
 import scala.util.Try
 
 object RedisClientActor {
@@ -20,8 +20,6 @@ class RedisClientActor extends Actor with ActorLogging {
 
   val client = new RedisClient("localhost", 6379)
 
-  import system.dispatcher
-
   def receive = {
     case ar: APIResults =>
       log.info("RedisClientActor - received APIResults")
@@ -31,22 +29,15 @@ class RedisClientActor extends Actor with ActorLogging {
       log.info("RedisClientActor - received RedisResultsRequest")
       sender ! RedisResults(readFromRedis("apiResults").get.getOrElse(""), rrr.sender)
 
-//    case fer: FirstEDAResults =>
-//      log.info("RedisClientActor - received FirstEDAResults")
-//      saveToRedis(fer.edaResults, "edaResults")
   }
 
   private def saveToRedis(resultType: String, results: String): Try[Boolean] = Try {
-
-//    val client = new RedisClient("localhost", 6379)
 
     client.set(resultType, results)
 
   }
 
   protected def readFromRedis(resultsType: String): Try[Option[String]] = Try {
-
-//    val client = new RedisClient("localhost", 6379)
 
     client.get(resultsType)
   }

@@ -30,6 +30,7 @@ libraryDependencies ++= {
     "org.apache.spark"            %% "spark-sql"                    % sparkVersion % "compile",
     "org.apache.spark"            %% "spark-streaming"              % sparkVersion % "compile",
     "org.json4s"                  %% "json4s-native"                % "3.2.11",
-    "net.debasishg"               %% "redisclient"                  % "3.0"
+    "net.debasishg"               %% "redisclient"                  % "3.0",
+    "com.google.code.gson"        % "gson"                          % "2.6.1"
   )
 }

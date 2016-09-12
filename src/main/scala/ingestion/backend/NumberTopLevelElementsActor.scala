@@ -37,7 +37,6 @@ class NumberTopLevelElementsActor extends Actor with ActorLogging {
   }
 
   private def getNumberOfTopLevelElements(json: String): Int = {
-    //Turn the String into Json and get the number of top-level(?) elements in it. Look for scala json libraries/utils. See what I use in SparkJobSever.
     val jsonAST = parse(json)
 
     jsonAST.children.size

@@ -5,7 +5,7 @@ import akka.util.Timeout
 import ingestion.backend._
 import ingestion.routing.PerRequestCreator
 import spray.http.HttpHeaders.{`Access-Control-Allow-Headers`, `Access-Control-Allow-Origin`}
-import spray.http.{SomeOrigins, HttpOrigin, HttpHeaders}
+import spray.http.{HttpEntity, SomeOrigins, HttpOrigin, HttpHeaders}
 import spray.routing._
 
 import scala.concurrent.duration._
