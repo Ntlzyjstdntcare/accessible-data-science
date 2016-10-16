@@ -6,6 +6,7 @@ import com.datastax.driver.core._
 import ingestion.IngestionRestService.{RedisResults, RedisResultsRequest, SaveToCassandraRequest, SaveToCassandraResponse}
 
 import scala.concurrent.duration._
+import scala.util.{Failure, Success, Try}
 
 /**
   * Created by colm on 25/03/16.
@@ -40,9 +41,11 @@ class CassandraClientActor extends Actor with ActorLogging {
     val cluster = Cluster.builder().addContactPoint("localhost").build
     val session = cluster.connect("datasets")
     val boundStatement = prepareCassandraStatement(session, redisResults)
-    session.execute(boundStatement)
-    SaveToCassandraResponse("Saved to Cassandra Successfully")
-
+    val result = Try(session.execute(boundStatement))
+    result match {
+      case Success(x) => SaveToCassandraResponse("Saved to Cassandra Successfully")
+      case Failure(y) => SaveToCassandraResponse("Not saved to Cassandra Successfully")
+    }
   }
 
   private def prepareCassandraStatement(session: Session, dataset: String): BoundStatement = {
